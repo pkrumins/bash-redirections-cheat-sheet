@@ -110,6 +110,8 @@
 \hline
 \verb|cmd > >(cmd1) 2> >(cmd2)| & Send stdout of \verb|cmd| to \verb|cmd1| and stderr of \verb|cmd| to \verb|cmd2|. \\
 \hline
+\verb|cmd <(cmd1) <(cmd2)| & Send stdouts of \verb|cmd1| and \verb|cmd2| to descriptors, giving descriptor names to \verb|cmd|. \\
+\hline
 \verb/cmd1 | cmd2 | cmd3 | cmd4/ \par
 \verb/echo ${PIPESTATUS[@]}/ & Find out the exit codes of all piped commands. \\
 \hline

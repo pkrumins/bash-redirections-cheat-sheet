@@ -100,9 +100,17 @@
 | echo ${PIPESTATUS[@]}       |                                             |
 +-----------------------------'---------------------------------------------'
 |                                                                           |
+| I explained each one of these redirections in my article All About Bash   |
+| Redirections:                                                             |
+|                                                                           |
+| http://www.catonmat.net/blog/bash-one-liners-explained-part-three         |
+|                                                                           |
++---------------------------------------------------------------------------+
+|                                                                           |
 | Did I miss any redirections? Let me know! Email me peter@catonmat.net, or |
 | fork this cheat sheet on github:                                          |
 |                                                                           |
 | http://www.github.com/pkrumins/bash-redirections-cheat-sheet              |
 |                                                                           |
 `-( Released under GNU Free Document License )------------------------------'
+

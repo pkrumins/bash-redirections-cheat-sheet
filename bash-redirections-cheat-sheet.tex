@@ -35,7 +35,7 @@
 \Large \textbf{Bash Redirections Cheat Sheet}
 \end{center}
 
-\vspace{0.4in}
+\vspace{0.1in}
 
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{|m{5.5cm}|m{12.2cm}|}
@@ -82,13 +82,17 @@
 \hline
 \verb|exec 3>&-| & Close a file descriptor. \\
 \hline
+\verb|exec 4>&3| & Make file descriptor \verb|4| to be a copy of file descriptor \verb|3|. (Copy file descriptor \verb|3| to \verb|4|.) \\
+\hline
+\verb|exec 4>&3-| & Copy file descriptor \verb|3| to \verb|4| and close file descriptor \verb|3|. \\
+\hline
 \verb|echo "foo" >&3| & Write to a custom file descriptor. \\
 \hline
 \verb|cat <&3| & Read from a custom file descriptor. \\
 \hline
 \verb|(cmd1; cmd2) > file| & Redirect stdout from multiple commands to a file (using a sub-shell). \\
 \hline
-\verb|{cmd1; cmd2;} > file| & Redirect stdout from multiple commands to a file (faster; not using a sub-shell). \\
+\verb|{ cmd1; cmd2; } > file| & Redirect stdout from multiple commands to a file (faster; not using a sub-shell). \\
 \hline
 \verb|exec 3<> /dev/tcp/host/port| & Open a TCP connection to \verb|host:port|. \\
 \hline
@@ -111,7 +115,7 @@
 \hline
 \end{tabular}
 
-\vspace{0.4in}
+\vspace{0.2in}
 
 Did I miss any redirections? Let me know! Email me peter@catonmat.net, or fork this cheat sheet on github: \par \href{http://github.com/pkrumins/bash-redirections-cheat-sheet}{github.com/pkrumins/bash-redirections-cheat-sheet}
 

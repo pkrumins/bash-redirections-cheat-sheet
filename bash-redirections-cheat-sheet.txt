@@ -72,7 +72,7 @@
 | (cmd1; cmd2) > file         | Redirect stdout from multiple commands to a |
 |                             | file (using a sub-shell).                   |
 +-----------------------------'---------------------------------------------'
-| {cmd1; cmd2;} > file        | Redirect stdout from multiple commands to a |
+| { cmd1; cmd2; } > file      | Redirect stdout from multiple commands to a |
 |                             | file (faster; not using a sub-shell).       |
 +-----------------------------'---------------------------------------------'
 | exec 3<> /dev/tcp/host/port | Open a TCP connection to host:port.         |

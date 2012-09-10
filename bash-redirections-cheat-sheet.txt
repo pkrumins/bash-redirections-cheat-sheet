@@ -46,6 +46,11 @@
 | baz                         |                                             |
 | EOL                         |                                             |
 +-----------------------------'---------------------------------------------'
+| cmd <<- EOL                 |                                             |
+| <tab>foo                    | Redirect a bunch of lines to the stdin.     |
+| <tab>bar                    | The <tab>'s are ignored but not the         |
+| EOL                         | whitespace.  Helpful for formatting         |
++-----------------------------'---------------------------------------------'
 | cmd <<< "string"            | Redirect a single line of text to stdin.    |
 +-----------------------------'---------------------------------------------'
 | exec 2> file                | Redirect stderr of all commands to a file   |

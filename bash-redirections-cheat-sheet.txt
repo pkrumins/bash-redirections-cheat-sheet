@@ -1,0 +1,103 @@
+.---------------------------------------------------------------------------.
+|                                                                           |
+|                      Bash Redirections Cheat Sheet                        |
+|                                                                           |
++---------------------------------------------------------------------------+
+|                                                                           |
+| Created by Peteris Krumins (peter@catonmat.net)                           |
+| www.catonmat.net -- good coders code, great coders reuse                  |
+|                                                                           |
++-----------------------------.---------------------------------------------+
+| Redirection                 | Description                                 |
+'-----------------------------'---------------------------------------------'
+| cmd > file                  | Redirect the standard output (stdout) of    |
+|                             | `cmd` to a file.                            |
++-----------------------------'---------------------------------------------'
+| cmd 1> file                 | Same as `cmd > file`. 1 is the default file |
+|                             | descriptor for stdout.                      |
++-----------------------------'---------------------------------------------'
+| cmd 2> file                 | Redirect the standard error (stderr) of     |
+|                             | `cmd` to a file. 2 is the default file      |
+|                             | descriptor for stderr.                      |
++-----------------------------'---------------------------------------------'
+| cmd >> file                 | Append stdout of `cmd` to a file.           |
++-----------------------------'---------------------------------------------'
+| cmd 2>> file                | Append stderr of `cmd` to a file.           |
++-----------------------------'---------------------------------------------'
+| cmd &> file                 | Redirect stdout and stderr to a file.       |
++-----------------------------'---------------------------------------------'
+| cmd > file 2>&1             | Another way to redirect both stdout and     |
+|                             | stderr of `cmd` to a file. This *is not*    |
+|                             | same as `cmd 2>&1 >file`.                   |
+|                             | Redirection order matters!                  |
++-----------------------------'---------------------------------------------'
+| cmd > /dev/null             | Discard stdout.                             |
++-----------------------------'---------------------------------------------'
+| cmd 2> /dev/null            | Discard stderr.                             |
++-----------------------------'---------------------------------------------'
+| cmd &> /dev/null            | Discard stdout and stderr.                  |
++-----------------------------'---------------------------------------------'
+| cmd < file                  | Redirect the contents of the file to the    |
+|                             | stdin of `cmd`.                             |
++-----------------------------'---------------------------------------------'
+| cmd << EOL                  |                                             |
+| foo                         |                                             |
+| bar                         | Redirect a bunch of lines to the stdin.     |
+| baz                         |                                             |
+| EOL                         |                                             |
++-----------------------------'---------------------------------------------'
+| cmd <<< "string"            | Redirect a single line of text to stdin.    |
++-----------------------------'---------------------------------------------'
+| exec 2> file                | Redirect stderr of all commands to a file   |
+|                             | forever.                                    |
++-----------------------------'---------------------------------------------'
+| exec 3< file                | Open a file for reading using a custom fd.  |
++-----------------------------'---------------------------------------------'
+| exec 3> file                | Open a file for writing using a custom fd.  |
++-----------------------------'---------------------------------------------'
+| exec 3<> file               | Open a file for reading and writing using   |
+|                             | a custom file descriptor.                   |
++-----------------------------'---------------------------------------------'
+| exec 3>&-                   | Close a file descriptor.                    |
++-----------------------------'---------------------------------------------'
+| echo "foo" >&3              | Write to a custom file descriptor.          |
++-----------------------------'---------------------------------------------'
+| cat <&3                     | Read from a custom file descriptor.         |
++-----------------------------'---------------------------------------------'
+| (cmd1; cmd2) > file         | Redirect stdout from multiple commands to a |
+|                             | file (using a sub-shell).                   |
++-----------------------------'---------------------------------------------'
+| {cmd1; cmd2;} > file        | Redirect stdout from multiple commands to a |
+|                             | file (faster; not using a sub-shell).       |
++-----------------------------'---------------------------------------------'
+| exec 3<> /dev/tcp/host/port | Open a TCP connection to host:port.         |
++-----------------------------'---------------------------------------------'
+| exec 3<> /dev/tcp/host/port | Open a TCP connection to host:port.         |
++-----------------------------'---------------------------------------------'
+| cmd1 | cmd2                 | Redirect stdout of cmd1 to stdin of `cmd2`. |
++-----------------------------'---------------------------------------------'
+| cmd1 |& cmd2                | Redirect stdout and stderr of `cmd1` to     |
+|                             | stdin of `cmd2` (bash 4.0+ only).           |
+|                             | Use `cmd1 2>&1 | cmd2` for older bashes.    |
++-----------------------------'---------------------------------------------'
+| cmd | tee file              | Redirect stdout of `cmd` to a file and      |
+|                             | print it to screen.                         |
++-----------------------------'---------------------------------------------'
+| exec {filew}> file          | Open a file for writing using a named file  |
+|                             | descriptor called `{filew}` (bash 4.1+)     |
++-----------------------------'---------------------------------------------'
+| cmd 3>&1 1>&2 2>&3          | Swap stdout and stderr of `cmd`.            |
++-----------------------------'---------------------------------------------'
+| cmd > >(cmd1) 2> >(cmd2)    | Send stdout of `cmd` to `cmd1` and stderr   |
+|                             | `cmd` to `cmd2`.                            |
++-----------------------------'---------------------------------------------'
+| cmd1 | cmd2 | cmd3 | cmd4   | Find out the exit codes of all piped cmds.  |
+| echo ${PIPESTATUS[@]}       |                                             |
++-----------------------------'---------------------------------------------'
+|                                                                           |
+| Did I miss any redirections? Let me know! Email me peter@catonmat.net, or |
+| fork this cheat sheet on github:                                          |
+|                                                                           |
+| http://www.github.com/pkrumins/bash-redirections-cheat-sheet              |
+|                                                                           |
+`-( Released under GNU Free Document License )------------------------------'

@@ -1,0 +1,129 @@
+% Bash Redirections Cheat Sheet
+%
+% by Peteris Krumins (peter@catonmat.net)
+% http://www.catonmat.net  -  good coders code, great coders reuse
+%
+% 2012.09.09
+%
+
+\documentclass{article}
+
+\usepackage[left=1cm,top=1cm,right=1cm,bottom=1cm,nohead,nofoot]{geometry}
+
+\usepackage[pdftex]{hyperref}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{array}
+
+\hypersetup{pdftitle={Bash Redirections Cheat Sheet}}
+\hypersetup{pdfauthor={Peteris Krumins (peter@catonmat.net)}}
+\hypersetup{pdfkeywords={cheat sheet, bash, shell, bourne again shell, sh, redirection, redirections, command line, unix, linux, cheat sheat, cheet sheet, cheet sheat}}
+\hypersetup{pdfsubject={http://www.catonmat.net - good coders code, great coders reuse}}
+\hypersetup{colorlinks}
+
+\lstset{basicstyle=\ttfamily}
+
+\newcolumntype{M}{>{\centering\arraybackslash}m{\dimexpr.25\linewidth-2\tabcolsep}}
+
+\pagestyle{empty}
+
+% -----------------------------------------------------------------------
+
+\begin{document}
+
+\begin{center}
+\Large \textbf{Bash Redirections Cheat Sheet}
+\end{center}
+
+\vspace{0.4in}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|m{5.5cm}|m{12.2cm}|}
+\hline
+\large\textbf{Redirection} & \large\textbf{Description} \\
+\hline
+\verb|cmd > file| & Redirect the standard output (stdout) of \verb|cmd| to a file. \\
+\hline
+\verb|cmd 1> file| & Same as \verb|cmd > file|. \verb|1| is the default file descriptor for stdout. \\
+\hline
+\verb|cmd 2> file| & Redirect the standard error (stderr) of \verb|cmd| to a file. \verb|2| is the default file descriptor for stderr. \\
+\hline
+\verb|cmd >> file| & Append stdout of \verb|cmd| to a file. \\
+\hline
+\verb|cmd 2>> file| & Append stderr of \verb|cmd| to a file. \\
+\hline
+\verb|cmd &> file| & Redirect stdout and stderr of \verb|cmd| to a file. \\
+\hline
+\verb|cmd > file 2>&1| & Another way to redirect both stdout and stderr of \verb|cmd| to a file. This \textbf{is not} the same as \verb|cmd 2>&1 >file|. \textbf{Redirection order matters!} \\
+\hline
+\verb|cmd > /dev/null| & Discard stdout. \\
+\hline
+\verb|cmd 2> /dev/null| & Discard stderr. \\
+\hline
+\verb|cmd &> /dev/null| & Discard stdout and stderr. \\
+\hline
+\verb|cmd < file| & Redirect the contents of the file to the stdin of \verb|cmd|. \\
+\hline
+\verb|cmd << EOL| \par
+\verb|foo| \par
+\verb|bar| \par
+\verb|baz| \par
+\verb|EOL| & Redirect a bunch of lines to the stdin. \\
+\hline
+\verb|cmd <<< "string"| & Redirect a single line of text to the stdin of \verb|cmd|. \\
+\hline
+\verb|exec 2> file| & Redirect stderr of all commands to a file forever. \\
+\hline
+\verb|exec 3< file| & Open a file for reading using a custom file descriptor. \\
+\hline
+\verb|exec 3> file| & Open a file for writing using a custom file descriptor. \\
+\hline
+\verb|exec 3<> file| & Open a file for reading and writing using a custom file descriptor. \\
+\hline
+\verb|exec 3>&-| & Close a file descriptor. \\
+\hline
+\verb|echo "foo" >&3| & Write to a custom file descriptor. \\
+\hline
+\verb|cat <&3| & Read from a custom file descriptor. \\
+\hline
+\verb|(cmd1; cmd2) > file| & Redirect stdout from multiple commands to a file (using a sub-shell). \\
+\hline
+\verb|{cmd1; cmd2;} > file| & Redirect stdout from multiple commands to a file (faster; not using a sub-shell). \\
+\hline
+\verb|exec 3<> /dev/tcp/host/port| & Open a TCP connection to \verb|host:port|. \\
+\hline
+\verb|exec 3<> /dev/udp/host/port| & Open a UDP connection to \verb|host:port|. \\
+\hline
+\verb/cmd1 | cmd2/ & Redirect stdout of \verb|cmd1| to stdin of \verb|cmd2|. \\
+\hline
+\verb/cmd1 |& cmd2/ & Redirect stdout and stderr of \verb|cmd1| to stdin of \verb|cmd2| (bash 4.0+ only). Use \verb/cmd1 2>&1 | cmd2/ for older bashes. \\
+\hline
+\verb/cmd | tee file/ & Redirect stdout of \verb|cmd| to a file and print it to screen. \\
+\hline
+\verb|exec {filew}> file| & Open a file for writing using a named file descriptor called \verb|{filew}| (bash 4.1+). \\
+\hline
+\verb|cmd 3>&1 1>&2 2>&3| & Swap stdout and stderr of \verb|cmd|. \\
+\hline
+\verb|cmd > >(cmd1) 2> >(cmd2)| & Send stdout of \verb|cmd| to \verb|cmd1| and stderr of \verb|cmd| to \verb|cmd2|. \\
+\hline
+\verb/cmd1 | cmd2 | cmd3 | cmd4/ \par
+\verb/echo ${PIPESTATUS[@]}/ & Find out the exit codes of all piped commands. \\
+\hline
+\end{tabular}
+
+\vspace{0.4in}
+
+Did I miss any redirections? Let me know! Email me peter@catonmat.net, or fork this cheat sheet on github: \par \href{http://github.com/pkrumins/bash-redirections-cheat-sheet}{github.com/pkrumins/bash-redirections-cheat-sheet}
+
+\vfill
+
+\framebox{\parbox{5in}{
+A cheat sheet by \textbf{Peteris Krumins} (peter@catonmat.net), September 2012.
+
+\href{http://www.catonmat.net}{http://www.catonmat.net} - good coders code, great coders reuse
+
+\vspace{2mm}
+\footnotesize{Released under GNU Free Document License.}}}
+
+\end{document}
+

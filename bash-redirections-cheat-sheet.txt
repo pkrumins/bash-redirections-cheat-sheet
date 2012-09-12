@@ -82,7 +82,7 @@
 +-----------------------------'---------------------------------------------'
 | exec 3<> /dev/tcp/host/port | Open a TCP connection to host:port.         |
 +-----------------------------'---------------------------------------------'
-| exec 3<> /dev/tcp/host/port | Open a TCP connection to host:port.         |
+| exec 3<> /dev/udp/host/port | Open a UDP connection to host:port.         |
 +-----------------------------'---------------------------------------------'
 | cmd1 | cmd2                 | Redirect stdout of cmd1 to stdin of `cmd2`. |
 +-----------------------------'---------------------------------------------'

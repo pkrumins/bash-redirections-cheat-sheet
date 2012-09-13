@@ -104,6 +104,10 @@
 |                             | the pipe as an argument to `cmd1`.          |
 +-----------------------------.---------------------------------------------'
 | cmd1 | cmd2                 | Redirect stdout of cmd1 to stdin of `cmd2`. |
+|                             | Pro-tip: This is the same as                |
+|                             | `cmd1 > >(cmd2)`, same as `cmd2 < <(cmd1)`, |
+|                             | same as `> >(cmd2) cmd1`, same as           |
+|                             | `< <(cmd1) cmd2`.                           |
 +-----------------------------'---------------------------------------------'
 | cmd1 |& cmd2                | Redirect stdout and stderr of `cmd1` to     |
 |                             | stdin of `cmd2` (bash 4.0+ only).           |

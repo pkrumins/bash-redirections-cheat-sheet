@@ -28,12 +28,12 @@
 +-----------------------------'---------------------------------------------'
 | cmd > file 2>&1             | Another way to redirect both stdout and     |
 |                             | stderr of `cmd` to a file. This *is not*    |
-|                             | same as `cmd 2>&1 >file`.                   |
+|                             | same as `cmd 2>&1 > file`.                  |
 |                             | Redirection order matters!                  |
 +-----------------------------'---------------------------------------------'
-| cmd > /dev/null             | Discard stdout.                             |
+| cmd > /dev/null             | Discard stdout of `cmd`.                    |
 +-----------------------------'---------------------------------------------'
-| cmd 2> /dev/null            | Discard stderr.                             |
+| cmd 2> /dev/null            | Discard stderr of `cmd`.                    |
 +-----------------------------'---------------------------------------------'
 | cmd &> /dev/null            | Discard stdout and stderr.                  |
 +-----------------------------'---------------------------------------------'
@@ -41,17 +41,18 @@
 |                             | stdin of `cmd`.                             |
 +-----------------------------'---------------------------------------------'
 | cmd << EOL                  |                                             |
-| foo                         |                                             |
-| bar                         | Redirect a bunch of lines to the stdin.     |
-| baz                         |                                             |
+| foo                         | Redirect a bunch of lines to the stdin.     |
+| bar                         | If 'EOL' is quoted, text is treated         |
+| baz                         | literally. This is called a here-document.  |
 | EOL                         |                                             |
 +-----------------------------'---------------------------------------------'
 | cmd <<- EOL                 |                                             |
 | <tab>foo                    | Redirect a bunch of lines to the stdin.     |
-| <tab>bar                    | The <tab>'s are ignored but not the         |
-| EOL                         | whitespace.  Helpful for formatting         |
+| <tab><tab>bar               | The <tab>'s are ignored but not the         |
+| EOL                         | whitespace. Helpful for formatting.         |
 +-----------------------------'---------------------------------------------'
 | cmd <<< "string"            | Redirect a single line of text to stdin.    |
+|                             | This is called a here-string.               |
 +-----------------------------'---------------------------------------------'
 | exec 2> file                | Redirect stderr of all commands to a file   |
 |                             | forever.                                    |
@@ -82,8 +83,26 @@
 +-----------------------------'---------------------------------------------'
 | exec 3<> /dev/tcp/host/port | Open a TCP connection to host:port.         |
 +-----------------------------'---------------------------------------------'
-| exec 3<> /dev/tcp/host/port | Open a TCP connection to host:port.         |
+| exec 3<> /dev/udp/host/port | Open a UDP connection to host:port.         |
 +-----------------------------'---------------------------------------------'
+| cmd <(cmd1)                 | Redirect stdout of `cmd1` to an anonymous   |
+|                             | fifo, then pass the fifo to `cmd` as an     |
+|                             | argument. Useful when `cmd` doesn't read    |
+|                             | from stdin directly.                        |
++-----------------------------'---------------------------------------------'
+| cmd < <(cmd1)               | Redirect stdout of `cmd1` to an anonymous   |
+|                             | fifo, then redirect the fifo to stdin of    |
+|                         ____' `cmd`. Best example:                        |
+|                        | diff <(find /path1 | sort) <(find /path2 | sort) |
++------------------------'----.---------------------------------------------'
+| cmd <(cmd1) <(cmd2)         | Redirect stdout of `cmd1` `cmd2` to two     |
+|                             | anonymous fifos, then pass both fifos as    |
+|                             | arguments to \verb|cmd|.                    |
++-----------------------------.---------------------------------------------'
+| cmd1 >(cmd2)                | Run `cmd2` with its stdin connected to an   |
+|                             | anonymous fifo, and pass the filename of    |
+|                             | the pipe as an argument to `cmd1`.          |
++-----------------------------.---------------------------------------------'
 | cmd1 | cmd2                 | Redirect stdout of cmd1 to stdin of `cmd2`. |
 +-----------------------------'---------------------------------------------'
 | cmd1 |& cmd2                | Redirect stdout and stderr of `cmd1` to     |

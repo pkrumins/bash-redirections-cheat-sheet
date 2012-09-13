@@ -6,24 +6,20 @@
 % 2012.09.09
 %
 
-\documentclass{article}
+\documentclass[9pt]{memoir}
 
-\usepackage[left=1cm,top=0.7cm,right=1cm,bottom=0.5cm,nohead,nofoot]{geometry}
+\usepackage[left=1cm,top=0.5cm,right=1cm,bottom=0.5cm,nohead,nofoot]{geometry}
 
 \usepackage[pdftex]{hyperref}
 \usepackage{verbatim}
-\usepackage{listings}
 \usepackage{array}
+\usepackage{upquote}
 
 \hypersetup{pdftitle={Bash Redirections Cheat Sheet}}
 \hypersetup{pdfauthor={Peteris Krumins (peter@catonmat.net)}}
 \hypersetup{pdfkeywords={cheat sheet, bash, shell, bourne again shell, sh, redirection, redirections, command line, unix, linux, cheat sheat, cheet sheet, cheet sheat}}
 \hypersetup{pdfsubject={http://www.catonmat.net - good coders code, great coders reuse}}
 \hypersetup{colorlinks}
-
-\lstset{basicstyle=\ttfamily}
-
-\newcolumntype{M}{>{\centering\arraybackslash}m{\dimexpr.25\linewidth-2\tabcolsep}}
 
 \pagestyle{empty}
 
@@ -32,7 +28,7 @@
 \begin{document}
 
 \begin{center}
-\Large \textbf{Bash Redirections Cheat Sheet}
+\huge \textbf{Bash Redirections Cheat Sheet}
 \end{center}
 
 \vspace{0.1in}
@@ -44,9 +40,9 @@
 \hline
 \verb|cmd > file| & Redirect the standard output (stdout) of \verb|cmd| to a file. \\
 \hline
-\verb|cmd 1> file| & Same as \verb|cmd > file|. \verb|1| is the default file descriptor for stdout. \\
+\verb|cmd 1> file| & Same as \verb|cmd > file|. \verb|1| is the default file descriptor (fd) for stdout. \\
 \hline
-\verb|cmd 2> file| & Redirect the standard error (stderr) of \verb|cmd| to a file. \verb|2| is the default file descriptor for stderr. \\
+\verb|cmd 2> file| & Redirect the standard error (stderr) of \verb|cmd| to a file. \verb|2| is the default fd for stderr. \\
 \hline
 \verb|cmd >> file| & Append stdout of \verb|cmd| to a file. \\
 \hline
@@ -54,23 +50,31 @@
 \hline
 \verb|cmd &> file| & Redirect stdout and stderr of \verb|cmd| to a file. \\
 \hline
-\verb|cmd > file 2>&1| & Another way to redirect both stdout and stderr of \verb|cmd| to a file. This \textbf{is not} the same as \verb|cmd 2>&1 >file|. \textbf{Redirection order matters!} \\
+\verb|cmd > file 2>&1| & Another way to redirect both stdout and stderr of \verb|cmd| to a file. This \underline{is not} the same as \verb|cmd 2>&1 > file|. \underline{Redirection order matters!} \\
 \hline
-\verb|cmd > /dev/null| & Discard stdout. \\
+\verb|cmd > /dev/null| & Discard stdout of \verb|cmd|. \\
 \hline
-\verb|cmd 2> /dev/null| & Discard stderr. \\
+\verb|cmd 2> /dev/null| & Discard stderr of \verb|cmd|. \\
 \hline
-\verb|cmd &> /dev/null| & Discard stdout and stderr. \\
+\verb|cmd &> /dev/null| & Discard stdout and stderr of \verb|cmd|. \\
 \hline
-\verb|cmd < file| & Redirect the contents of the file to the stdin of \verb|cmd|. \\
+\verb|cmd < file| & Redirect the contents of the file to the standard input (stdin) of \verb|cmd|. \\
 \hline
+\small{
 \verb|cmd << EOL| \par
-\verb|foo| \par
-\verb|bar| \par
-\verb|baz| \par
-\verb|EOL| & Redirect a bunch of lines to the stdin. \\
+\verb|line1| \par
+\verb|line2| \par
+\verb|EOL|
+} & Redirect a bunch of lines to the stdin. If \verb|'EOL'| is quoted, text is treated literally. This is called a here-document. \\
 \hline
-\verb|cmd <<< "string"| & Redirect a single line of text to the stdin of \verb|cmd|. \\
+\small{
+\verb|cmd <<- EOL| \par
+\verb|<tab>foo| \par
+\verb|<tab><tab>bar| \par
+\verb|EOL|
+} & Redirect a bunch of lines to the stdin and strip the leading tabs. \\
+\hline
+\verb|cmd <<< "string"| & Redirect a single line of text to the stdin of \verb|cmd|. This is called a here-string. \\
 \hline
 \verb|exec 2> file| & Redirect stderr of all commands to a file forever. \\
 \hline
@@ -82,7 +86,7 @@
 \hline
 \verb|exec 3>&-| & Close a file descriptor. \\
 \hline
-\verb|exec 4>&3| & Make file descriptor \verb|4| to be a copy of file descriptor \verb|3|. (Copy file descriptor \verb|3| to \verb|4|.) \\
+\verb|exec 4>&3| & Make file descriptor \verb|4| to be a copy of file descriptor \verb|3|. (Copy fd \verb|3| to \verb|4|.) \\
 \hline
 \verb|exec 4>&3-| & Copy file descriptor \verb|3| to \verb|4| and close file descriptor \verb|3|. \\
 \hline
@@ -94,11 +98,21 @@
 \hline
 \verb|{ cmd1; cmd2; } > file| & Redirect stdout from multiple commands to a file (faster; not using a sub-shell). \\
 \hline
-\verb|exec 3<> /dev/tcp/host/port| & Open a TCP connection to \verb|host:port|. \\
+\verb|exec 3<> /dev/tcp/host/port| & Open a TCP connection to \verb|host:port|. (This is a bash feature, not Linux feature). \\
 \hline
-\verb|exec 3<> /dev/udp/host/port| & Open a UDP connection to \verb|host:port|. \\
+\verb|exec 3<> /dev/udp/host/port| & Open a UDP connection to \verb|host:port|. (This is a bash feature, not Linux feature). \\
 \hline
-\verb/cmd1 | cmd2/ & Redirect stdout of \verb|cmd1| to stdin of \verb|cmd2|. \\
+\verb|cmd <(cmd1)| & Redirect stdout of \verb|cmd1| to an anonymous fifo, then pass the fifo to \verb|cmd| as an argument. Useful when \verb|cmd| doesn't read from stdin directly. \\
+\hline
+\verb|cmd < <(cmd1)| & Redirect stdout of \verb|cmd1| to an anonymous fifo, then redirect the fifo to stdin of \verb|cmd|. Best example: \verb\diff <(find /path1 | sort) <(find /path2 | sort)\. \\
+\hline
+\verb|cmd <(cmd1) <(cmd2) | & Redirect stdout of \verb|cmd1| and \verb|cmd2| to two anonymous fifos, then pass both fifos as arguments to \verb|cmd|. \\
+\hline
+\verb/cmd1 >(cmd2)/ & Run \verb|cmd2| with its stdin connected to an anonymous fifo, and pass the filename of the pipe as an argument to \verb|cmd1|. \\
+\hline
+\verb/cmd1 > >(cmd2)/ & Run \verb|cmd2| with its stdin connected to an anonymous fifo, then redirect stdout of \verb|cmd| to this anonymous pipe. \\
+\hline
+\verb/cmd1 | cmd2/ & Redirect stdout of \verb|cmd1| to stdin of \verb|cmd2|. Pro-tip: This is the same as \verb|cmd > >(cmd2)|, same as \verb|cmd2 < <(cmd)|, same as \verb|> >(cmd2) cmd|, same as \verb|< <(cmd) cmd2|. \\
 \hline
 \verb/cmd1 |& cmd2/ & Redirect stdout and stderr of \verb|cmd1| to stdin of \verb|cmd2| (bash 4.0+ only). Use \verb/cmd1 2>&1 | cmd2/ for older bashes. \\
 \hline

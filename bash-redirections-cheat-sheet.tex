@@ -112,7 +112,7 @@
 \hline
 \verb/cmd1 > >(cmd2)/ & Run \verb|cmd2| with its stdin connected to an anonymous fifo, then redirect stdout of \verb|cmd| to this anonymous pipe. \\
 \hline
-\verb/cmd1 | cmd2/ & Redirect stdout of \verb|cmd1| to stdin of \verb|cmd2|. Pro-tip: This is the same as \verb|cmd > >(cmd2)|, same as \verb|cmd2 < <(cmd)|, same as \verb|> >(cmd2) cmd|, same as \verb|< <(cmd) cmd2|. \\
+\verb/cmd1 | cmd2/ & Redirect stdout of \verb|cmd1| to stdin of \verb|cmd2|. Pro-tip: This is the same as \verb|cmd1 > >(cmd2)|, same as \verb|cmd2 < <(cmd1)|, same as \verb|> >(cmd2) cmd1|, same as \verb|< <(cmd1) cmd2|. \\
 \hline
 \verb/cmd1 |& cmd2/ & Redirect stdout and stderr of \verb|cmd1| to stdin of \verb|cmd2| (bash 4.0+ only). Use \verb/cmd1 2>&1 | cmd2/ for older bashes. \\
 \hline

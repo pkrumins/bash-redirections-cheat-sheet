@@ -120,7 +120,7 @@
 \hline
 \verb|exec {filew}> file| & Open a file for writing using a named file descriptor called \verb|{filew}| (bash 4.1+). \\
 \hline
-\verb|cmd 3>&1 1>&2 2>&3| & Swap stdout and stderr of \verb|cmd|. \\
+\verb|cmd 3>&1 1>&2 2>&3-| & Swap stdout and stderr of \verb|cmd|. \\
 \hline
 \verb|cmd > >(cmd1) 2> >(cmd2)| & Send stdout of \verb|cmd| to \verb|cmd1| and stderr of \verb|cmd| to \verb|cmd2|. \\
 \hline

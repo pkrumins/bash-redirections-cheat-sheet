@@ -92,12 +92,13 @@
 +-----------------------------'---------------------------------------------'
 | cmd < <(cmd1)               | Redirect stdout of `cmd1` to an anonymous   |
 |                             | fifo, then redirect the fifo to stdin of    |
-|                         ____' `cmd`. Best example:                        |
-|                        | diff <(find /path1 | sort) <(find /path2 | sort) |
+|                             | `cmd`.                                      |
 +------------------------'----.---------------------------------------------'
 | cmd <(cmd1) <(cmd2)         | Redirect stdout of `cmd1` `cmd2` to two     |
 |                             | anonymous fifos, then pass both fifos as    |
 |                             | arguments to \verb|cmd|.                    |
+|                         ____' Best example:                               |
+|                        | diff <(find /path1 | sort) <(find /path2 | sort) |
 +-----------------------------.---------------------------------------------'
 | cmd1 >(cmd2)                | Run `cmd2` with its stdin connected to an   |
 |                             | anonymous fifo, and pass the filename of    |

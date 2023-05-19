@@ -104,9 +104,9 @@
 \hline
 \verb|cmd <(cmd1)| & Redirect stdout of \verb|cmd1| to an anonymous fifo, then pass the fifo to \verb|cmd| as an argument. Useful when \verb|cmd| doesn't read from stdin directly. \\
 \hline
-\verb|cmd < <(cmd1)| & Redirect stdout of \verb|cmd1| to an anonymous fifo, then redirect the fifo to stdin of \verb|cmd|. Best example: \verb\diff <(find /path1 | sort) <(find /path2 | sort)\. \\
+\verb|cmd < <(cmd1)| & Redirect stdout of \verb|cmd1| to an anonymous fifo, then redirect the fifo to stdin of \verb|cmd|. \\
 \hline
-\verb|cmd <(cmd1) <(cmd2) | & Redirect stdout of \verb|cmd1| and \verb|cmd2| to two anonymous fifos, then pass both fifos as arguments to \verb|cmd|. \\
+\verb|cmd <(cmd1) <(cmd2) | & Redirect stdout of \verb|cmd1| and \verb|cmd2| to two anonymous fifos, then pass both fifos as arguments to \verb|cmd|.  Best example: \verb\diff <(find /path1 | sort) <(find /path2 | sort)\. \\
 \hline
 \verb/cmd1 >(cmd2)/ & Run \verb|cmd2| with its stdin connected to an anonymous fifo, and pass the filename of the pipe as an argument to \verb|cmd1|. \\
 \hline
